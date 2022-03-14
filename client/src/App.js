@@ -15,6 +15,7 @@ import axios from "axios";
 const UserSignUpWithContext = withContext(UserSignUp);
 const HeaderWithContext = withContext(Header);
 const UserSignOutWithContext = withContext(UserSignOut);
+const UserSignInUpWithContext = withContext(UserSignIn);
 
 function App() {
   const [data, setData] = useState([]);
@@ -33,7 +34,7 @@ function App() {
           <Route exact path="/" element={<Courses data={data} />} />
           <Route exact path="/courses" element={<Courses data={data} />} />
           <Route exact path="/createcourse" element={<CreateCourse />} />
-          <Route exact path="/signin" element={<UserSignIn />} />
+          <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOutWithContext />} />
           <Route
