@@ -7,9 +7,12 @@ import UpdateCourse from "./components/UpdateCourse";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
-
+import NotFound from "./components/NotFound";
+import withContext from "./Context";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+
+const UserSignUpWithContext = withContext(UserSignUp);
 
 function App() {
   const [data, setData] = useState([]);
@@ -29,7 +32,7 @@ function App() {
           <Route exact path="/courses" element={<Courses data={data} />} />
           <Route exact path="/createcourse" element={<CreateCourse />} />
           <Route exact path="/signin" element={<UserSignIn />} />
-          <Route exact path="/signup" element={<UserSignUp />} />
+          <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOut />} />
           <Route
             exact
@@ -41,6 +44,7 @@ function App() {
             path={`/courses/:id/update`}
             element={<UpdateCourse data={data} />}
           />{" "}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>
