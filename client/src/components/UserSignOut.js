@@ -1,20 +1,24 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { Consumer } from "../Context";
+import { createUser } from "../Data.js";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "../Data.js";
+import { Context } from "../Context";
 
-function UserSignOut() {
-  // const [remove, setRemove] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .delete("http://localhost:5000/api/courses/id")
-  //     .then((response) => setRemove(response.data.id));
-  // }, []);
+function UserSignOut(props) {
+  const { context } = props;
+  let navigate = useNavigate();
 
-  return (
-    <p>
-      <a href="sign-out.html">Sign Out</a>!
-    </p>
-  );
+  context.actions.signOut().then(() => {
+    console.log("disconnected");
+    navigate("/");
+  });
+
+  // context.actions.signOut().then(() => {
+  //   console.log(context.authenticatedUser.user.firstName);
+  //   navigate("/");
+  // });
 }
 
 export default UserSignOut;

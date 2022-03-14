@@ -1,8 +1,21 @@
 import React from "react";
 import UserSignOut from "./UserSignOut";
 import { Link } from "react-router-dom";
+import { Consumer } from "../Context";
+import { Context } from "../Context";
+import { useNavigate } from "react-router-dom";
+import UserSignIn from "./UserSignIn";
 
-function Header() {
+function Header(props) {
+  const { context } = props;
+  const authUser = context.authenticatedUser;
+  let navigate = useNavigate();
+
+  function signout() {
+    context.actions.signOut();
+    console.log("disconnected");
+    navigate("/");
+  }
   return (
     <header>
       <div className="wrap header--flex">
@@ -12,13 +25,23 @@ function Header() {
           </Link>
         </h1>
         <nav>
-          {true && (
+          {authUser && (
             <ul className="header--signedin">
-              <li>Welcome, Joe Smith!</li>
+              <li>Welcome, {authUser.user.firstName}!</li>
               <li>
-                <a href="sign-out.html">
-                  <UserSignOut />
-                </a>
+                {/* <Link to="/signout"> */}
+                <a onClick={signout}> Sign Out</a>
+                {/* </Link>{" "} */}
+              </li>
+            </ul>
+          )}
+          {!authUser && (
+            <ul className="header--signedin">
+              <li>Welcome, Stranger!</li>
+              <li>
+                <Link to="/signup">
+                  <a> Sign Up</a>
+                </Link>
               </li>
             </ul>
           )}

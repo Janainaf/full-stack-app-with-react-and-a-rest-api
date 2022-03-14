@@ -35,11 +35,11 @@ function UserSignOut(props) {
   return (
     <div id="root">
       <main>
-        <div class="form--centered">
+        <div className="form--centered">
           <h2>Sign Up</h2>
 
           <form onSubmit={handleSubmit}>
-            <label for="firstName">First Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input
               id="firstName"
               name="firstName"
@@ -47,7 +47,7 @@ function UserSignOut(props) {
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
             />
-            <label for="lastName">Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
             <input
               id="lastName"
               name="lastName"
@@ -55,7 +55,7 @@ function UserSignOut(props) {
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
             />
-            <label for="emailAddress">Email Address</label>
+            <label htmlFor="emailAddress">Email Address</label>
             <input
               id="emailAddress"
               name="emailAddress"
@@ -63,7 +63,7 @@ function UserSignOut(props) {
               value={emailAddress}
               onChange={(event) => setEmailAddress(event.target.value)}
             />
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               id="password"
               name="password"
@@ -71,12 +71,12 @@ function UserSignOut(props) {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            <button class="button" type="submit">
+            <button className="button" type="submit">
               Sign Up
             </button>
             <button
-              class="button button-secondary"
-              onClick="event.preventDefault(); location.href='index.html';"
+              className="button button-secondary"
+              // onClick={}
             >
               Cancel
             </button>
