@@ -14,8 +14,6 @@ function Courses(props) {
     context.data
       .getCourses()
       .then((response) => {
-        console.log(response);
-
         setData(response);
       })
       .catch((error) => {

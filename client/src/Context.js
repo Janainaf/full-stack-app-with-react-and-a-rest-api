@@ -9,7 +9,6 @@ export class Provider extends Component {
     super();
     this.data = new Data();
     this.cookie = Cookies.get("authenticatedUser");
-
     this.state = {
       authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null,
     };

@@ -10,7 +10,6 @@ import UserSignOut from "./components/UserSignOut";
 import NotFound from "./components/NotFound";
 import withContext from "./Context";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
 
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -18,6 +17,7 @@ const UserSignOutWithContext = withContext(UserSignOut);
 const UserSignInUpWithContext = withContext(UserSignIn);
 const CreateCourseWithContext = withContext(CreateCourse);
 const CoursesWithContext = withContext(Courses);
+const CourseDetailWithContext = withContext(CourseDetail);
 
 function App() {
   return (
@@ -35,7 +35,11 @@ function App() {
           <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOutWithContext />} />
-          <Route exact path={`courses/:id`} element={<CourseDetail />} />
+          <Route
+            exact
+            path={`courses/:id`}
+            element={<CourseDetailWithContext />}
+          />
           <Route
             exact
             path={`/courses/:id/update`}
