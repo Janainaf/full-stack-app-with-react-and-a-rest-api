@@ -18,6 +18,7 @@ const UserSignInUpWithContext = withContext(UserSignIn);
 const CreateCourseWithContext = withContext(CreateCourse);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
+const UpdateCourseDetailWithContext = withContext(UpdateCourse);
 
 function App() {
   return (
@@ -43,7 +44,7 @@ function App() {
           <Route
             exact
             path={`/courses/:id/update`}
-            element={<UpdateCourse />}
+            element={<UpdateCourseDetailWithContext />}
           />{" "}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function CourseDetail(props) {
   const params = useParams();
   const { context } = props;
-  let navigate = useNavigate();
   const [selectedCourse, setselectedCourse] = useState("");
   const id = params.id;
   const _isMounted = useRef(true);
+  let navigate = useNavigate();
 
   useEffect(() => {
     context.data
@@ -35,13 +34,11 @@ function CourseDetail(props) {
       <div className="actions--bar">
         {selectedCourse && (
           <div className="wrap">
-            <Link to={`/courses/${selectedCourse.id}/update`}>
+            <Link to={`/courses/${selectedCourse.course.id}/update`}>
               <a className="button button-secondary">Update Course</a>{" "}
             </Link>{" "}
             <Link to={`/courses/`}>
-              <a className="button" onClick={handleRemoveCourse}>
-                Delete Course
-              </a>
+              <a className="button">Delete Course</a>
             </Link>{" "}
             <Link to="/">
               <a className="button button-secondary">Return to List</a>{" "}
