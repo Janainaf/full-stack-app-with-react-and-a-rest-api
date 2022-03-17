@@ -1,83 +1,113 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { useState, useEffect } from "react";
+import { Consumer } from "../Context";
+import Context from "../Context";
+import Data from "../Data";
 
-function CreateCourse() {
-  const [course, setCourse] = useState([]);
-  // const [errors, setErrors] = useState([]);
+import { useNavigate } from "react-router-dom";
 
-  useEffect(() => {
-    const course = { title: "React Hooks POST Request Example" };
-    axios
-      .post("http://localhost:5000/api/courses", course)
-      .then((response) => setCourse(response.data.id));
-  }, []);
+function CreateCourse(props) {
+  const { context } = props;
+  let navigate = useNavigate();
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [estimatedTime, setestimatedTime] = useState("");
+  const [materialsNeeded, setmaterialsNeeded] = useState("");
+  const authUser = context.authenticatedUser.user;
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const course = {
+      title,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId: authUser.id,
+    };
+    console.log(context.authenticatedUser.password);
+    context.data
+      .createCourse(
+        course,
+        authUser.emailAddress,
+        context.authenticatedUser.password
+      )
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   let errors = false;
-
   return (
-    <body>
-      <div id="root">
-        <main>
-          <div class="wrap">
-            <h2>Create Course</h2>
-            {errors && (
-              <div class="validation--errors">
-                <h3>Validation Errors</h3>
-                <ul>
-                  <li>Please provide a value for "Title"</li>
-                  <li>Please provide a value for "Description"</li>
-                </ul>
-              </div>
-            )}
-            <form>
-              <div class="main--flex">
-                <div>
-                  <label for="courseTitle">Course Title</label>
-                  <input
-                    id="courseTitle"
-                    name="courseTitle"
-                    type="text"
-                    value=""
-                  />
-                  {/* authenthicated user */}
-                  <p>{course.author}</p>
+    <div id="root">
+      <main>
+        <div className="wrap">
+          <h2>Create Course</h2>
+          {errors && (
+            <div className="validation--errors">
+              <h3>Validation Errors</h3>
+              <ul>
+                <li>Please provide a value for "Title"</li>
+                <li>Please provide a value for "Description"</li>
+              </ul>
+            </div>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="main--flex">
+              <div>
+                <label htmlFor="courseTitle">Course Title</label>
+                <input
+                  id="courseTitle"
+                  name="courseTitle"
+                  type="text"
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
+                />
+                <p>
+                  {" "}
+                  By {authUser.firstName} {authUser.lastName}
+                </p>
 
-                  <label for="courseDescription">Course Description</label>
-                  <textarea
-                    id="courseDescription"
-                    name="courseDescription"
-                  ></textarea>
-                </div>
-                <div>
-                  <label for="estimatedTime">Estimated Time</label>
-                  <input
-                    id="estimatedTime"
-                    name="estimatedTime"
-                    type="text"
-                    value=""
-                  />
-
-                  <label for="materialsNeeded">Materials Needed</label>
-                  <textarea
-                    id="materialsNeeded"
-                    name="materialsNeeded"
-                  ></textarea>
-                </div>
+                <label htmlFor="courseDescription">Course Description</label>
+                <textarea
+                  id="courseDescription"
+                  name="courseDescription"
+                  type="text"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
+                ></textarea>
               </div>
-              <button class="button" type="submit">
-                Create Course
-              </button>
-              <button
-                class="button button-secondary"
-                onClick="event.preventDefault(); location.href='index.html';"
-              >
-                Cancel
-              </button>
-            </form>
-          </div>
-        </main>
-      </div>
-    </body>
+              <div>
+                <label htmlFor="estimatedTime">Estimated Time</label>
+
+                <input
+                  id="estimatedTime"
+                  name="estimatedTime"
+                  type="text"
+                  value={estimatedTime}
+                  onChange={(event) => setestimatedTime(event.target.value)}
+                />
+                <label htmlFor="materialsNeeded">Materials Needed</label>
+                <textarea
+                  id="materialsNeeded"
+                  name="materialsNeeded"
+                  type="text"
+                  value={materialsNeeded}
+                  onChange={(event) => setmaterialsNeeded(event.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            <button className="button" type="submit">
+              Create Course
+            </button>
+            <button className="button button-secondary">Cancel</button>
+          </form>
+        </div>
+      </main>
+    </div>
   );
 }
 

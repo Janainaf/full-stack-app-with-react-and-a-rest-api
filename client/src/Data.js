@@ -1,11 +1,5 @@
 export default class Data {
-  api(
-    path,
-    method = "GET",
-    body = null,
-    requiresAuth = false,
-    credentials = null
-  ) {
+  api(path, method, body = null, requiresAuth = false, credentials = null) {
     const url = "http://localhost:5000/api" + path;
 
     const options = {
@@ -23,6 +17,7 @@ export default class Data {
       const encodedCredentials = btoa(
         `${credentials.username}:${credentials.password}`
       );
+      console.log(`${credentials.username}:${credentials.password}`);
       options.headers["Authorization"] = `Basic ${encodedCredentials}`;
     }
     return fetch(url, options);
@@ -44,6 +39,22 @@ export default class Data {
 
   async createUser(user) {
     const response = await this.api("/users", "POST", user);
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then((data) => {
+        return data.errors;
+      });
+    } else {
+      throw new Error();
+    }
+  }
+
+  async createCourse(course, username, password) {
+    const response = await this.api("/courses", "POST", course, true, {
+      username,
+      password,
+    });
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {

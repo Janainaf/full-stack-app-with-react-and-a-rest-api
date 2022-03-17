@@ -12,10 +12,11 @@ import withContext from "./Context";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-const UserSignUpWithContext = withContext(UserSignUp);
 const HeaderWithContext = withContext(Header);
+const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
 const UserSignInUpWithContext = withContext(UserSignIn);
+const CreateCourseWithContext = withContext(CreateCourse);
 
 function App() {
   const [data, setData] = useState([]);
@@ -33,7 +34,11 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Courses data={data} />} />
           <Route exact path="/courses" element={<Courses data={data} />} />
-          <Route exact path="/createcourse" element={<CreateCourse />} />
+          <Route
+            exact
+            path="/createcourse"
+            element={<CreateCourseWithContext />}
+          />
           <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOutWithContext />} />

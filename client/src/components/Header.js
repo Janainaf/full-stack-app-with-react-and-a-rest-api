@@ -21,7 +21,7 @@ function Header(props) {
       <div className="wrap header--flex">
         <h1 className="header--logo">
           <Link to="/">
-            <a href="index.html">Courses</a>
+            <a>Courses</a>
           </Link>
         </h1>
         <nav>
@@ -39,8 +39,8 @@ function Header(props) {
             <ul className="header--signedin">
               <li>Welcome, Stranger!</li>
               <li>
-                <Link to="/signup">
-                  <a> Sign Up</a>
+                <Link to="/signin">
+                  <a> Sign In</a>
                 </Link>
               </li>
             </ul>
@@ -48,17 +48,6 @@ function Header(props) {
         </nav>
       </div>
     </header>
-    //       <ul classNameName="header--signedout">
-    //         <li>
-    //           <a href="sign-up.html">Sign Up</a>
-    //         </li>
-    //         <li>
-    //           <a href="sign-in.html">Sign In</a>
-    //         </li>
-    //       </ul>
-    //     </nav>
-    //   </div>
-    // </header>
   );
 }
 export default Header;

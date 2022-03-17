@@ -9,20 +9,35 @@ function UserSignIn(props) {
   const [password, setPassword] = useState("");
   const { context } = props;
   let navigate = useNavigate();
-
+  let error = false;
   function handleSubmit(event) {
     event.preventDefault();
-    context.actions.signIn(emailAddress, password).then(() => {
-      console.log("connected");
-      navigate("/");
-    });
+    try {
+      context.actions.signIn(emailAddress, password).then((user) => {
+        if (user !== null) {
+          console.log("Success");
+          navigate("/");
+        } else {
+          return (error = true);
+        }
+      });
+    } catch {
+      console.log("Unauthorized - 401");
+    }
   }
   return (
     <div id="root">
       <main>
         <div className="form--centered">
           <h2>Sign In</h2>
-
+          {error && (
+            <div className="validation--errors">
+              <h3>Validation Errors</h3>
+              <ul>
+                <li>Please provide a value for "Title"</li>
+              </ul>
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <label htmlFor="emailAddress">Email Address</label>
             <input
@@ -46,8 +61,7 @@ function UserSignIn(props) {
             <button className="button button-secondary">Cancel</button>
           </form>
           <p>
-            Don't have a user account? Click here to{" "}
-            <a href="sign-up.html">sign up</a>!
+            Don't have a user account? Click here to <a>sign up</a>!
           </p>
         </div>
       </main>

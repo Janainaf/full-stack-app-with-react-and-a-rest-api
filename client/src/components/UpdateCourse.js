@@ -67,12 +67,7 @@ function UpdateCourse(props) {
         <button class="button" type="submit">
           Update Course
         </button>
-        <button
-          class="button button-secondary"
-          onclick="event.preventDefault(); location.href='index.html';"
-        >
-          Cancel
-        </button>
+        <button class="button button-secondary">Cancel</button>
       </form>
     </div>
   );
