@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Consumer } from "../Context";
+import { Context } from "../Context";
+import { useNavigate } from "react-router-dom";
+import Data from "../Data";
 
 function Courses(props) {
+  const { context } = props;
+  let navigate = useNavigate();
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    context.data
+      .getCourses()
+      .then((response) => {
+        console.log(response);
+
+        setData(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching and parsing data");
+      });
+  });
+
   return (
     <div className="wrap main--grid">
-      {props.data &&
-        props.data.map((course) => (
+      {data &&
+        data.map((course) => (
           <a key={course.id} className="course--module course--link">
             <Link to={`courses/${course.id}`}>
               <h2 className="course--label">Course</h2>

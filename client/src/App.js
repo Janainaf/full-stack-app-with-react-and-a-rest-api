@@ -17,23 +17,16 @@ const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
 const UserSignInUpWithContext = withContext(UserSignIn);
 const CreateCourseWithContext = withContext(CreateCourse);
+const CoursesWithContext = withContext(Courses);
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios("http://localhost:5000/api/courses")
-      .then((response) => setData(response.data))
-      .catch((error) => console.log("Error fetching and parsing data", error));
-  }, []);
-
   return (
     <div>
       <main>
         <HeaderWithContext />
         <Routes>
-          <Route exact path="/" element={<Courses data={data} />} />
-          <Route exact path="/courses" element={<Courses data={data} />} />
+          <Route exact path="/" element={<CoursesWithContext />} />
+          <Route exact path="/courses" element={<CoursesWithContext />} />
           <Route
             exact
             path="/createcourse"
@@ -42,15 +35,11 @@ function App() {
           <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOutWithContext />} />
-          <Route
-            exact
-            path={`courses/:id`}
-            element={<CourseDetail data={data} />}
-          />
+          <Route exact path={`courses/:id`} element={<CourseDetail />} />
           <Route
             exact
             path={`/courses/:id/update`}
-            element={<UpdateCourse data={data} />}
+            element={<UpdateCourse />}
           />{" "}
           <Route path="*" element={<NotFound />} />
         </Routes>
