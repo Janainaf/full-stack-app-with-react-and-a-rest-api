@@ -9,6 +9,7 @@ function CourseDetail(props) {
   const id = params.id;
   const _isMounted = useRef(true);
   let navigate = useNavigate();
+  const authUser = context.authenticatedUser;
 
   useEffect(() => {
     context.data
@@ -22,11 +23,21 @@ function CourseDetail(props) {
     _isMounted.current = false;
   }, []);
 
-  const handleRemoveCourse = (username, password) => {
-    // const id = params.id;
-    // axios
-    //   .delete(`http://localhost:5000/api/courses/${id}`)
-    //   .catch((error) => console.log("Error fetching and parsing data", error));
+  const handleRemoveCourse = (event) => {
+    event.preventDefault();
+    context.data
+      .deleteCourse(
+        id,
+        authUser.user.emailAddress,
+        context.authenticatedUser.password
+      )
+      .then((response) => {
+        console.log(response);
+        navigate("/courses");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -38,9 +49,11 @@ function CourseDetail(props) {
               <a className="button button-secondary">Update Course</a>{" "}
             </Link>{" "}
             <Link to={`/courses/`}>
-              <a className="button">Delete Course</a>
+              <a className="button" onClick={handleRemoveCourse}>
+                Delete Course
+              </a>
             </Link>{" "}
-            <Link to="/">
+            <Link to="/courses">
               <a className="button button-secondary">Return to List</a>{" "}
             </Link>
           </div>

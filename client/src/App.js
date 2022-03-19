@@ -26,26 +26,17 @@ function App() {
       <main>
         <HeaderWithContext />
         <Routes>
-          <Route exact path="/" element={<CoursesWithContext />} />
-          <Route exact path="/courses" element={<CoursesWithContext />} />
+          {/* <Route exact path="/" element={<CoursesWithContext />} /> */}
+          <Route path="/courses" element={<CoursesWithContext />} />
+          <Route path="/createcourse" element={<CreateCourseWithContext />} />
+          <Route path={`courses/:id`} element={<CourseDetailWithContext />} />
           <Route
-            exact
-            path="/createcourse"
-            element={<CreateCourseWithContext />}
+            path={`courses/:id/update`}
+            element={<UpdateCourseDetailWithContext />}
           />
           <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
           <Route exact path="/signout" element={<UserSignOutWithContext />} />
-          <Route
-            exact
-            path={`courses/:id`}
-            element={<CourseDetailWithContext />}
-          />
-          <Route
-            exact
-            path={`/courses/:id/update`}
-            element={<UpdateCourseDetailWithContext />}
-          />{" "}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

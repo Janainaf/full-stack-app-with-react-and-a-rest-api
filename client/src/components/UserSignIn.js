@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Consumer } from "../Context";
 import { Context } from "../Context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function UserSignIn(props) {
   const [emailAddress, setEmailAddress] = useState("");
@@ -16,7 +16,7 @@ function UserSignIn(props) {
       context.actions.signIn(emailAddress, password).then((user) => {
         if (user !== null) {
           console.log("Success");
-          navigate("/");
+          navigate("/courses");
         } else {
           return (error = true);
         }
@@ -61,7 +61,10 @@ function UserSignIn(props) {
             <button className="button button-secondary">Cancel</button>
           </form>
           <p>
-            Don't have a user account? Click here to <a>sign up</a>!
+            Don't have a user account? Click here to
+            <Link to="/signup">
+              <a> Sign Up</a>
+            </Link>
           </p>
         </div>
       </main>

@@ -23,7 +23,6 @@ function CreateCourse(props) {
       materialsNeeded,
       userId: authUser.user.id,
     };
-    console.log(context.authenticatedUser.password);
     context.data
       .createCourse(
         course,
@@ -31,7 +30,7 @@ function CreateCourse(props) {
         context.authenticatedUser.password
       )
       .then(() => {
-        navigate("/");
+        navigate("/courses");
       })
       .catch((err) => {
         console.log(err);

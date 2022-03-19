@@ -84,12 +84,12 @@ export default class Data {
     }
   }
 
-  async updateCourse(course, username, password) {
-    const response = await this.api("/courses", "PUT", course, true, {
+  async updateCourse(id, course, username, password) {
+    const response = await this.api(`/courses/${id}`, "PUT", course, true, {
       username,
       password,
     });
-    if (response.status === 201) {
+    if (response.status === 204) {
       return [];
     } else if (response.status === 400) {
       return response.json().then((data) => {
@@ -101,11 +101,11 @@ export default class Data {
   }
 
   async deleteCourse(id, username, password) {
-    const response = await this.api(`/courses/${id}`, "DELETE", id, true, {
+    const response = await this.api(`/courses/${id}`, "DELETE", null, true, {
       username,
       password,
     });
-    if (response.status === 201) {
+    if (response.status === 204) {
       return [];
     } else if (response.status === 400) {
       return response.json().then((data) => {

@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { Consumer } from "../Context";
-import { createUser } from "../Data.js";
-import { useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 
 function UserSignOut(props) {
   const [firstName, setFirstName] = useState("");
@@ -74,16 +73,13 @@ function UserSignOut(props) {
             <button className="button" type="submit">
               Sign Up
             </button>
-            <button
-              className="button button-secondary"
-              // onClick={}
-            >
-              Cancel
-            </button>
+            <button className="button button-secondary">Cancel</button>
           </form>
           <p>
             Already have a user account? Click here to{" "}
-            <a href="sign-in.html">sign in</a>!
+            <Link to="/signin">
+              <a> Sign in</a>!
+            </Link>
           </p>
         </div>
       </main>

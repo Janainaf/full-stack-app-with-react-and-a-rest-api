@@ -20,18 +20,14 @@ function Header(props) {
     <header>
       <div className="wrap header--flex">
         <h1 className="header--logo">
-          <Link to="/">
-            <a>Courses</a>
-          </Link>
+          <Link to="/courses">Courses</Link>
         </h1>
         <nav>
           {authUser && (
             <ul className="header--signedin">
               <li>Welcome, {authUser.user.firstName}!</li>
               <li>
-                {/* <Link to="/signout"> */}
                 <a onClick={signout}> Sign Out</a>
-                {/* </Link>{" "} */}
               </li>
             </ul>
           )}
@@ -41,6 +37,9 @@ function Header(props) {
               <li>
                 <Link to="/signin">
                   <a> Sign In</a>
+                </Link>
+                <Link to="/signup">
+                  <a> Sign Up</a>
                 </Link>
               </li>
             </ul>
