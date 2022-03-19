@@ -1,7 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Consumer } from "../Context";
-import { Context } from "../Context";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function UserSignIn(props) {
@@ -62,9 +60,7 @@ function UserSignIn(props) {
           </form>
           <p>
             Don't have a user account? Click here to
-            <Link to="/signup">
-              <a> Sign Up</a>
-            </Link>
+            <Link to="/signup"> Sign Up</Link>
           </p>
         </div>
       </main>

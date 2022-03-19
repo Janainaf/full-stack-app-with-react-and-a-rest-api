@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+// import Forbidden from "./Forbidden";
 
 function CourseDetail(props) {
   const params = useParams();
@@ -45,16 +46,21 @@ function CourseDetail(props) {
       <div className="actions--bar">
         {selectedCourse && (
           <div className="wrap">
-            <Link to={`/courses/${selectedCourse.course.id}/update`}>
-              <a className="button button-secondary">Update Course</a>{" "}
-            </Link>{" "}
-            <Link to={`/courses/`}>
-              <a className="button" onClick={handleRemoveCourse}>
-                Delete Course
-              </a>
-            </Link>{" "}
-            <Link to="/courses">
-              <a className="button button-secondary">Return to List</a>{" "}
+            <Link
+              to={`/courses/${selectedCourse.course.id}/update`}
+              className="button"
+            >
+              Update Course{" "}
+            </Link>
+            <Link
+              to={`/courses/`}
+              className="button"
+              onClick={handleRemoveCourse}
+            >
+              Delete Course
+            </Link>
+            <Link to="/courses" className="button button-secondary">
+              Return to List
             </Link>
           </div>
         )}

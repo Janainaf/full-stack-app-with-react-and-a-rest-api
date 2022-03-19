@@ -33,14 +33,9 @@ function Header(props) {
           )}
           {!authUser && (
             <ul className="header--signedin">
-              <li>Welcome, Stranger!</li>
               <li>
-                <Link to="/signin">
-                  <a> Sign In</a>
-                </Link>
-                <Link to="/signup">
-                  <a> Sign Up</a>
-                </Link>
+                <Link to="/signin">Sign In</Link>
+                <Link to="/signup"> Sign Up</Link>
               </li>
             </ul>
           )}

@@ -21,14 +21,16 @@ function Courses(props) {
     <div className="wrap main--grid">
       {data &&
         data.map((course) => (
-          <a className="course--module course--link">
-            <Link to={`/courses/${course.id}`}>
-              <h2 className="course--label">Course</h2>
-              <h3 className="course--title">{course.title}</h3>
-            </Link>
-          </a>
+          <Link
+            to={`/courses/${course.id}`}
+            className="course--module course--link"
+            key={course.id}
+          >
+            <h2 className="course--label">Course</h2>
+            <h3 className="course--title">{course.title}</h3>
+          </Link>
         ))}
-      <a className="course--module course--add--module">
+      <Link to="/createcourse" className="course--module course--add--module">
         <span className="course--add--title">
           <svg
             version="1.1"
@@ -40,9 +42,9 @@ function Courses(props) {
           >
             <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
           </svg>
-          <Link to={"/createcourse"}>New Course </Link>
+          New Course
         </span>
-      </a>
+      </Link>
     </div>
   );
 }

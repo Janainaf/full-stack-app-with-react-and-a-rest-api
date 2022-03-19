@@ -36,7 +36,6 @@ function UserSignOut(props) {
       <main>
         <div className="form--centered">
           <h2>Sign Up</h2>
-
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name</label>
             <input
@@ -77,9 +76,7 @@ function UserSignOut(props) {
           </form>
           <p>
             Already have a user account? Click here to{" "}
-            <Link to="/signin">
-              <a> Sign in</a>!
-            </Link>
+            <Link to="/signin">Sign in!</Link>
           </p>
         </div>
       </main>
