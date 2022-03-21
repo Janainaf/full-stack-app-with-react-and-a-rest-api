@@ -14,6 +14,7 @@ function UpdateCourse(props) {
   const [description, setDescription] = useState("");
   const [estimatedTime, setestimatedTime] = useState("");
   const [materialsNeeded, setmaterialsNeeded] = useState("");
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     context.data
@@ -21,8 +22,8 @@ function UpdateCourse(props) {
       .then((response) => {
         setselectedCourse(response);
       })
-      .catch((error) => {
-        console.error("Error fetching and parsing data");
+      .catch((err) => {
+        console.log(err);
       });
     _isMounted.current = false;
   });
@@ -43,8 +44,12 @@ function UpdateCourse(props) {
         authUser.user.emailAddress,
         context.authenticatedUser.password
       )
-      .then(() => {
-        navigate("/");
+      .then((errors) => {
+        if (errors.length) {
+          setErrors(errors);
+        } else {
+          navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -62,6 +67,15 @@ function UpdateCourse(props) {
             selectedCourse && (
               <>
                 <h2>Update Course</h2>
+                {errors.length > 0 && (
+                  <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+                    <h3>{errors}</h3>
+                    {/* <ul>
+                <li> </li>}
+              </ul> */}
+                  </div>
+                )}
                 <form onSubmit={handleUpdateCourse}>
                   <div className="main--flex">
                     <div>

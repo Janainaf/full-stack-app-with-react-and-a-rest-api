@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import Forbidden from "./Forbidden";
+import ReactMarkdown from "react-markdown";
 
 function CourseDetail(props) {
   const params = useParams();
@@ -85,20 +86,24 @@ function CourseDetail(props) {
                     By {selectedCourse.course.User.firstName}{" "}
                     {selectedCourse.course.User.lastName}
                   </p>
-                  <p>{selectedCourse.course.description}</p>
+                  <p>
+                    <ReactMarkdown
+                      children={selectedCourse.course.description}
+                    ></ReactMarkdown>
+                  </p>
                 </>
               )}
             </div>
             {selectedCourse && selectedCourse.course.materialsNeeded && (
               <div>
                 <h3 className="course--detail--title">Estimated Time</h3>
-                <p>{selectedCourse.course.estimatedTime}</p>{" "}
+                <p>{selectedCourse.course.estimatedTime}</p>
                 <h3 className="course--detail--title">Materials Needed</h3>
-                <>
-                  <ul className="course--detail--list">
-                    <li>{selectedCourse.course.materialsNeeded}</li>
-                  </ul>
-                </>
+                <ul className="course--detail--list">
+                  <ReactMarkdown
+                    children={selectedCourse.course.materialsNeeded}
+                  ></ReactMarkdown>
+                </ul>
               </div>
             )}
           </div>

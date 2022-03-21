@@ -8,7 +8,7 @@ function UserSignOut(props) {
   const [lastName, setLastName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const { context } = props;
   let navigate = useNavigate();

@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 function CreateCourse(props) {
   const { context } = props;
   let navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [estimatedTime, setestimatedTime] = useState("");
   const [materialsNeeded, setmaterialsNeeded] = useState("");
+  const [errors, setErrors] = useState([]);
+
   const authUser = context.authenticatedUser;
 
   function handleSubmit(event) {
@@ -29,15 +30,18 @@ function CreateCourse(props) {
         authUser.user.emailAddress,
         context.authenticatedUser.password
       )
-      .then(() => {
-        navigate("/");
+      .then((errors) => {
+        if (errors.length) {
+          setErrors(errors);
+        } else {
+          navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  let errors = false;
   return (
     <div id="root">
       <main>
@@ -45,13 +49,13 @@ function CreateCourse(props) {
         {authUser !== null && (
           <div className="wrap">
             <h2>Create Course</h2>
-            {errors && (
+            {errors.length > 0 && (
               <div className="validation--errors">
                 <h3>Validation Errors</h3>
-                <ul>
-                  <li>Please provide a value for "Title"</li>
-                  <li>Please provide a value for "Description"</li>
-                </ul>
+                <h3>{errors}</h3>
+                {/* <ul>
+                <li> </li>}
+              </ul> */}
               </div>
             )}
             <form onSubmit={handleSubmit}>
