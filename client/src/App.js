@@ -13,8 +13,8 @@ import { Routes, Route } from "react-router-dom";
 
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
-const UserSignOutWithContext = withContext(UserSignOut);
 const UserSignInUpWithContext = withContext(UserSignIn);
+const UserSignOutUpWithContext = withContext(UserSignOut);
 const CreateCourseWithContext = withContext(CreateCourse);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
@@ -26,17 +26,19 @@ function App() {
       <main>
         <HeaderWithContext />
         <Routes>
-          {/* <Route exact path="/" element={<CoursesWithContext />} /> */}
-          <Route path="/courses" element={<CoursesWithContext />} />
-          <Route path="/createcourse" element={<CreateCourseWithContext />} />
+          <Route exact path="/" element={<CoursesWithContext />} />
           <Route path={`courses/:id`} element={<CourseDetailWithContext />} />
+          {/* <ProtectedRoute> */}
+          <Route path="/courses/create" element={<CreateCourseWithContext />} />
           <Route
             path={`courses/:id/update`}
             element={<UpdateCourseDetailWithContext />}
           />
+          {/* </ProtectedRoute>
+           */}
           <Route exact path="/signin" element={<UserSignInUpWithContext />} />
           <Route exact path="/signup" element={<UserSignUpWithContext />} />
-          <Route exact path="/signout" element={<UserSignOutWithContext />} />
+          <Route exact path="/signout" element={<UserSignOutUpWithContext />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

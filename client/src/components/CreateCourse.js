@@ -30,7 +30,7 @@ function CreateCourse(props) {
         context.authenticatedUser.password
       )
       .then(() => {
-        navigate("/courses");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

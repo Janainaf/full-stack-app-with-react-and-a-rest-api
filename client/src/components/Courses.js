@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 function Courses(props) {
   const { context } = props;
   const [data, setData] = useState("");
+  const _isMounted = useRef(true);
 
   useEffect(() => {
     context.data
@@ -15,7 +15,8 @@ function Courses(props) {
       .catch((error) => {
         console.error("Error fetching and parsing data");
       });
-  }, []);
+    _isMounted.current = false;
+  });
 
   return (
     <div className="wrap main--grid">
@@ -30,7 +31,7 @@ function Courses(props) {
             <h3 className="course--title">{course.title}</h3>
           </Link>
         ))}
-      <Link to="/createcourse" className="course--module course--add--module">
+      <Link to="/courses/create" className="course--module course--add--module">
         <span className="course--add--title">
           <svg
             version="1.1"

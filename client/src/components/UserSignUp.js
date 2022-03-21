@@ -8,6 +8,8 @@ function UserSignOut(props) {
   const [lastName, setLastName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
+
   const { context } = props;
   let navigate = useNavigate();
 
@@ -19,16 +21,20 @@ function UserSignOut(props) {
       emailAddress,
       password,
     };
-    context.data
-      .createUser(user)
-      .then(() => {
-        context.actions.signIn(emailAddress, password).then(() => {
-          navigate("/");
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+
+    try {
+      context.data.createUser(user).then((errors) => {
+        if (errors.length) {
+          setErrors(errors);
+        } else {
+          context.actions.signIn(emailAddress, password).then(() => {
+            navigate("/");
+          });
+        }
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -36,6 +42,15 @@ function UserSignOut(props) {
       <main>
         <div className="form--centered">
           <h2>Sign Up</h2>
+          {errors.length > 0 && (
+            <div className="validation--errors">
+              <h3>Validation Errors</h3>
+              <h3>{errors}</h3>
+              {/* <ul>
+                <li> </li>}
+              </ul> */}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name</label>
             <input

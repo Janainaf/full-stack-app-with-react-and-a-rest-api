@@ -5,18 +5,21 @@ import { Link, useNavigate } from "react-router-dom";
 function UserSignIn(props) {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const { context } = props;
   let navigate = useNavigate();
-  let error = false;
+
   function handleSubmit(event) {
     event.preventDefault();
     try {
       context.actions.signIn(emailAddress, password).then((user) => {
-        if (user !== null) {
-          console.log("Success");
-          navigate("/courses");
+        if (user === null) {
+          setError(true);
+          console.log(error);
         } else {
-          return (error = true);
+          console.log("Success");
+          navigate("/");
         }
       });
     } catch {
@@ -28,11 +31,11 @@ function UserSignIn(props) {
       <main>
         <div className="form--centered">
           <h2>Sign In</h2>
-          {error && (
+          {error === true && (
             <div className="validation--errors">
               <h3>Validation Errors</h3>
               <ul>
-                <li>Please provide a value for "Title"</li>
+                <li> Credential doesn't match</li>
               </ul>
             </div>
           )}

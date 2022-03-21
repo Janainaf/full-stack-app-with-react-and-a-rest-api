@@ -22,7 +22,7 @@ function CourseDetail(props) {
         console.error("Error fetching and parsing data");
       });
     _isMounted.current = false;
-  }, []);
+  });
 
   const handleRemoveCourse = (event) => {
     event.preventDefault();
@@ -34,7 +34,7 @@ function CourseDetail(props) {
       )
       .then((response) => {
         console.log(response);
-        navigate("/courses");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -46,22 +46,27 @@ function CourseDetail(props) {
       <div className="actions--bar">
         {selectedCourse && (
           <div className="wrap">
-            <Link
-              to={`/courses/${selectedCourse.course.id}/update`}
-              className="button"
-            >
-              Update Course{" "}
-            </Link>
-            <Link
-              to={`/courses/`}
-              className="button"
-              onClick={handleRemoveCourse}
-            >
-              Delete Course
-            </Link>
-            <Link to="/courses" className="button button-secondary">
-              Return to List
-            </Link>
+            {authUser === null ||
+            authUser.user.id !== selectedCourse.course.User.id ? (
+              <Link to="/" className="button button-secondary">
+                Return to List
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to={`/courses/${selectedCourse.course.id}/update`}
+                  className="button"
+                >
+                  Update Course{" "}
+                </Link>
+                <Link to="/" className="button" onClick={handleRemoveCourse}>
+                  Delete Course
+                </Link>
+                <Link to="/" className="button button-secondary">
+                  Return to List
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>

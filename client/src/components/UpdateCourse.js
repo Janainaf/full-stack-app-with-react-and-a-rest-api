@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Forbidden from "./Forbidden";
 
@@ -9,7 +9,7 @@ function UpdateCourse(props) {
   const id = params.id;
   let navigate = useNavigate();
   const authUser = context.authenticatedUser;
-
+  const _isMounted = useRef(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [estimatedTime, setestimatedTime] = useState("");
@@ -24,7 +24,8 @@ function UpdateCourse(props) {
       .catch((error) => {
         console.error("Error fetching and parsing data");
       });
-  }, []);
+    _isMounted.current = false;
+  });
 
   const handleUpdateCourse = (event) => {
     event.preventDefault();
@@ -43,7 +44,7 @@ function UpdateCourse(props) {
         context.authenticatedUser.password
       )
       .then(() => {
-        navigate("/courses");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
