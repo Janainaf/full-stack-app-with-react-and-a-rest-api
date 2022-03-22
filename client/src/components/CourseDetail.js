@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import Forbidden from "./Forbidden";
@@ -9,20 +9,23 @@ function CourseDetail(props) {
   const { context } = props;
   const [selectedCourse, setselectedCourse] = useState("");
   const id = params.id;
-  const _isMounted = useRef(true);
   let navigate = useNavigate();
   const authUser = context.authenticatedUser;
 
   useEffect(() => {
+    let isMounted = true;
+
     context.data
       .getCourse(id)
       .then((response) => {
-        setselectedCourse(response);
+        if (isMounted) setselectedCourse(response);
       })
-      .catch((error) => {
-        console.error("Error fetching and parsing data");
+      .catch((err) => {
+        console.log(err);
       });
-    _isMounted.current = false;
+    return () => {
+      isMounted = false;
+    };
   });
 
   const handleRemoveCourse = (event) => {
@@ -33,12 +36,11 @@ function CourseDetail(props) {
         authUser.user.emailAddress,
         context.authenticatedUser.password
       )
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         navigate("/");
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
 

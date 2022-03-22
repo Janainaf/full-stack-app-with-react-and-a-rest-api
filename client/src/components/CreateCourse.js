@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Forbidden from "./Forbidden";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CreateCourse(props) {
   const { context } = props;
@@ -106,7 +106,9 @@ function CreateCourse(props) {
               <button className="button" type="submit">
                 Create Course
               </button>
-              <button className="button button-secondary">Cancel</button>
+              <Link to="/">
+                <button className="button button-secondary">Cancel</button>{" "}
+              </Link>
             </form>
           </div>
         )}

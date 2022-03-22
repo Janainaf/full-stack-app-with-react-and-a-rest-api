@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Forbidden from "./Forbidden";
 
 function UpdateCourse(props) {
@@ -9,7 +9,6 @@ function UpdateCourse(props) {
   const id = params.id;
   let navigate = useNavigate();
   const authUser = context.authenticatedUser;
-  const _isMounted = useRef(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [estimatedTime, setestimatedTime] = useState("");
@@ -17,15 +16,19 @@ function UpdateCourse(props) {
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     context.data
       .getCourse(id)
       .then((response) => {
-        setselectedCourse(response);
+        if (isMounted) setselectedCourse(response);
       })
       .catch((err) => {
         console.log(err);
       });
-    _isMounted.current = false;
+    return () => {
+      isMounted = false;
+    };
   });
 
   const handleUpdateCourse = (event) => {
@@ -132,7 +135,9 @@ function UpdateCourse(props) {
                   <button className="button" type="submit">
                     Update Course
                   </button>
-                  <button className="button button-secondary">Cancel</button>
+                  <Link to={`/courses/${id}`}>
+                    <button className="button button-secondary">Cancel</button>{" "}
+                  </Link>{" "}
                 </form>
               </>
             )

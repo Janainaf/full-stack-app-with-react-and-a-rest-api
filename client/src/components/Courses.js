@@ -1,21 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Courses(props) {
   const { context } = props;
   const [data, setData] = useState("");
-  const _isMounted = useRef(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     context.data
       .getCourses()
       .then((response) => {
-        setData(response);
+        if (isMounted) setData(response);
       })
-      .catch((error) => {
-        console.error("Error fetching and parsing data");
+      .catch((err) => {
+        console.log(err);
       });
-    _isMounted.current = false;
+    return () => {
+      isMounted = false;
+    };
   });
 
   return (
