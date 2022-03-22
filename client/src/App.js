@@ -32,15 +32,15 @@ function App() {
           <Route path={`courses/:id`} element={<CourseDetailWithContext />} />
           <Route path="/courses/create" element={<CreateCourseWithContext />} />
 
-          {/* <Route
-            path={`courses/:id/update`}
-            element={<PrivateRouteWithContext />}
-          > */}
           <Route
-            path={`courses/:id/update`}
-            element={<UpdateCourseDetailWithContext />}
-          />
-          {/* </Route> */}
+            path="/courses/:id/update"
+            element={<PrivateRouteWithContext />}
+          >
+            <Route
+              path="/courses/:id/update"
+              element={<UpdateCourseDetailWithContext />}
+            />
+          </Route>
 
           <Route path="/courses/create" element={<PrivateRouteWithContext />}>
             <Route

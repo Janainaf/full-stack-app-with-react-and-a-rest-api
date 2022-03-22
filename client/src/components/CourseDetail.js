@@ -86,11 +86,9 @@ function CourseDetail(props) {
                     By {selectedCourse.course.User.firstName}{" "}
                     {selectedCourse.course.User.lastName}
                   </p>
-                  <p>
-                    <ReactMarkdown>
-                      {selectedCourse.course.description}
-                    </ReactMarkdown>
-                  </p>
+                  <ReactMarkdown>
+                    {selectedCourse.course.description}
+                  </ReactMarkdown>
                 </>
               )}
             </div>
