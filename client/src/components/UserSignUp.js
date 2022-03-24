@@ -45,10 +45,11 @@ function UserSignOut(props) {
           {errors.length > 0 && (
             <div className="validation--errors">
               <h3>Validation Errors</h3>
-              <h3>{errors}</h3>
-              {/* <ul>
-                <li> </li>}
-              </ul> */}
+              <ul>
+                {errors.map((error, i) => (
+                  <li key={i}>{error}</li>
+                ))}
+              </ul>
             </div>
           )}
           <form onSubmit={handleSubmit}>

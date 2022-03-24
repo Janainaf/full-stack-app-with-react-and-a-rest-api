@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Forbidden from "./Forbidden";
+import axios from "axios";
 
 function UpdateCourse(props) {
   const params = useParams();
@@ -9,41 +10,28 @@ function UpdateCourse(props) {
   const id = params.id;
   let navigate = useNavigate();
   const authUser = context.authenticatedUser;
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [estimatedTime, setestimatedTime] = useState("");
-  const [materialsNeeded, setmaterialsNeeded] = useState("");
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    let isMounted = true;
-
-    context.data
-      .getCourse(id)
+    axios
+      .get(`http://localhost:5000/api/courses/${id}`)
       .then((response) => {
-        if (isMounted) setselectedCourse(response);
+        setselectedCourse(response.data.course);
       })
       .catch((err) => {
         console.log(err);
       });
-    return () => {
-      isMounted = false;
-    };
-  });
+  }, [id, authUser.user.id]);
 
   const handleUpdateCourse = (event) => {
     event.preventDefault();
-    const course = {
-      title,
-      description,
-      estimatedTime,
-      materialsNeeded,
-      userId: authUser.user.id,
-    };
+    console.log("behold the selected course");
+    console.log(selectedCourse);
+
     context.data
       .updateCourse(
         id,
-        course,
+        selectedCourse,
         authUser.user.emailAddress,
         context.authenticatedUser.password
       )
@@ -59,12 +47,18 @@ function UpdateCourse(props) {
       });
   };
 
+  const handleChanges = (event) => {
+    setselectedCourse((prevValue) => ({
+      ...prevValue,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <div className="wrap">
       {selectedCourse && (
         <>
-          {authUser === null ||
-          authUser.user.id !== selectedCourse.course.User.id ? (
+          {authUser === null || authUser.user.id !== selectedCourse.User.id ? (
             <Forbidden />
           ) : (
             selectedCourse && (
@@ -73,10 +67,11 @@ function UpdateCourse(props) {
                 {errors.length > 0 && (
                   <div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <h3>{errors}</h3>
-                    {/* <ul>
-                <li> </li>}
-              </ul> */}
+                    <ul>
+                      {errors.map((error, i) => (
+                        <li key={i}>{error}</li>
+                      ))}
+                    </ul>
                   </div>
                 )}
                 <form onSubmit={handleUpdateCourse}>
@@ -84,27 +79,25 @@ function UpdateCourse(props) {
                     <div>
                       <label htmlFor="courseTitle">Course Title</label>
                       <input
-                        id="courseTitle"
-                        name="courseTitle"
+                        id="title"
                         type="text"
-                        placeholder={selectedCourse.course.title}
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
+                        name="title"
+                        defaultValue={selectedCourse.title}
+                        onInput={handleChanges}
                       />
                       <p>
-                        By {selectedCourse.course.User.firstName}{" "}
-                        {selectedCourse.course.User.lastName}
+                        By {selectedCourse.User.firstName}{" "}
+                        {selectedCourse.User.lastName}
                       </p>
 
                       <label htmlFor="courseDescription">
                         Course Description
                       </label>
                       <textarea
-                        id="courseDescription"
-                        name="courseDescription"
-                        placeholder={selectedCourse.course.description}
-                        value={description}
-                        onChange={(event) => setDescription(event.target.value)}
+                        id="description"
+                        name="description"
+                        defaultValue={selectedCourse.description}
+                        onInput={handleChanges}
                       ></textarea>
                     </div>
                     <div>
@@ -113,22 +106,16 @@ function UpdateCourse(props) {
                         id="estimatedTime"
                         name="estimatedTime"
                         type="text"
-                        placeholder={selectedCourse.course.estimatedTime}
-                        value={estimatedTime}
-                        onChange={(event) =>
-                          setestimatedTime(event.target.value)
-                        }
+                        defaultValue={selectedCourse.estimatedTime}
+                        onInput={handleChanges}
                       />
 
                       <label htmlFor="materialsNeeded">Materials Needed</label>
                       <textarea
                         id="materialsNeeded"
-                        name="materialsNeeded "
-                        value={materialsNeeded}
-                        onChange={(event) =>
-                          setmaterialsNeeded(event.target.value)
-                        }
-                        placeholder={selectedCourse.course.materialsNeeded}
+                        name="materialsNeeded"
+                        defaultValue={selectedCourse.materialsNeeded}
+                        onInput={handleChanges}
                       ></textarea>
                     </div>
                   </div>

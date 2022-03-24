@@ -94,7 +94,7 @@ function CourseDetail(props) {
                 </>
               )}
             </div>
-            {selectedCourse && selectedCourse.course.materialsNeeded && (
+            {selectedCourse && (
               <div>
                 <h3 className="course--detail--title">Estimated Time</h3>
                 <p>{selectedCourse.course.estimatedTime}</p>

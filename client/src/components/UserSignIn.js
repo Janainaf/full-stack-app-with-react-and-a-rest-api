@@ -35,7 +35,7 @@ function UserSignIn(props) {
             <div className="validation--errors">
               <h3>Validation Errors</h3>
               <ul>
-                <li> Credential doesn't match</li>
+                <li> Credentials don't match</li>
               </ul>
             </div>
           )}
