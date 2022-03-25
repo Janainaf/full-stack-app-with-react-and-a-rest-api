@@ -26,7 +26,7 @@ function CourseDetail(props) {
     return () => {
       isMounted = false;
     };
-  });
+  }, []);
 
   const handleRemoveCourse = (event) => {
     event.preventDefault();

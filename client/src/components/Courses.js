@@ -19,7 +19,7 @@ function Courses(props) {
     return () => {
       isMounted = false;
     };
-  });
+  }, []);
 
   return (
     <div className="wrap main--grid">
