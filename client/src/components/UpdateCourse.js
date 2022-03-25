@@ -25,8 +25,6 @@ function UpdateCourse(props) {
 
   const handleUpdateCourse = (event) => {
     event.preventDefault();
-    console.log("behold the selected course");
-    console.log(selectedCourse);
 
     context.data
       .updateCourse(

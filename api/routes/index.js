@@ -45,16 +45,16 @@ router.post(
       const user = await User.build(req.body);
 
       if (!user.firstName) {
-        errors.push('Please provide a value for "firstName"');
+        errors.push("Please provide your First Name");
       }
       if (!user.lastName) {
-        errors.push('Please provide a value for "lastName"');
+        errors.push("Please provide you Last Name");
       }
       if (!user.emailAddress) {
-        errors.push('Please provide a value for "emailAddress"');
+        errors.push("Please provide your e-mail address");
       }
       if (!user.password) {
-        errors.push('Please provide a value for "password"');
+        errors.push("Please provide a password");
       }
       if (errors.length > 0) {
         res.status(400).json({ errors });
@@ -143,7 +143,7 @@ router.post(
         }
       }
     } catch (error) {
-      console.log("there was an error", error);
+      console.log("There was an error", error);
     }
   })
 );
@@ -155,33 +155,30 @@ router.put(
   asyncHandler(async (req, res) => {
     let course;
     const errors = [];
+    const user = req.currentUser;
 
     try {
       course = await Course.findByPk(req.params.id);
-      const user = req.currentUser;
-
-      if (course.userId === user.id) {
-        if (!course.title) {
-          errors.push('Please provide a value for "title"');
-        }
-        if (!course.description) {
-          errors.push('Please provide a value for "description"');
-        }
-        if (errors.length > 0) {
-          res.status(400).json({ errors });
+      if (course) {
+        if (course.userId === user.id) {
+          await course.update(req.body);
+          res.status(204).end();
         } else {
-          if (course) {
-            await course.update(req.body);
-            res.status(204).location("/courses/").end();
-          }
+          res.status(403).json({ error: "Not authorised" });
         }
       } else {
-        res.status(401).json({
-          message: "Not Authorized.",
-        });
+        res.status(404).json(`Course Not Found`);
       }
     } catch (error) {
-      console.log("there was an error", error);
+      if (
+        error.name === "SequelizeValidationError" ||
+        error.name === "SequelizeUniqueConstraintError"
+      ) {
+        const errors = error.errors.map((err) => err.message);
+        res.status(400).json({ errors });
+      } else {
+        throw error;
+      }
     }
   })
 );
