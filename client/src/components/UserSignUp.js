@@ -12,6 +12,8 @@ function UserSignOut(props) {
 
   const { context } = props;
   let navigate = useNavigate();
+  // Signup a user using context and data helper
+  // for more information, please check Context.js and Data.js
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -46,6 +48,8 @@ function UserSignOut(props) {
             <div className="validation--errors">
               <h3>Validation Errors</h3>
               <ul>
+                {/* To create a account, all fields are required */}
+
                 {errors.map((error, i) => (
                   <li key={i}>{error}</li>
                 ))}

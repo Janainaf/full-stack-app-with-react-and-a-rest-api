@@ -15,6 +15,8 @@ function CreateCourse(props) {
 
   const authUser = context.authenticatedUser;
 
+  // Creates a new course  using context and data helper
+  // for more information, please check Context.js and Data.js
   function handleSubmit(event) {
     event.preventDefault();
     const course = {
@@ -45,12 +47,14 @@ function CreateCourse(props) {
   return (
     <div id="root">
       <main>
+        {/* Only registered users can create a course */}
         {authUser === null && <Forbidden />}
         {authUser !== null && (
           <div className="wrap">
             <h2>Create Course</h2>
             {errors.length > 0 && (
               <div className="validation--errors">
+                {/* To create a course, users have to provide title and description */}
                 <h3>Validation Errors</h3>
                 <ul>
                   {errors.map((error, i) => (

@@ -12,6 +12,7 @@ function UpdateCourse(props) {
   const authUser = context.authenticatedUser;
   const [errors, setErrors] = useState([]);
 
+  // Fetches the selected course by id using axios
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/courses/${id}`)
@@ -22,6 +23,9 @@ function UpdateCourse(props) {
         console.log(err);
       });
   }, [id, authUser.user.id]);
+
+  // Updates the selected course by id  using context and data helper
+  // for more information, please check Context.js and Data.js
 
   const handleUpdateCourse = (event) => {
     event.preventDefault();
@@ -56,11 +60,15 @@ function UpdateCourse(props) {
     <div className="wrap">
       {selectedCourse && (
         <>
+          {/* ***Only the user who created the course can update or delete it*** */}
+
           {authUser === null || authUser.user.id !== selectedCourse.User.id ? (
             <Forbidden />
           ) : (
             selectedCourse && (
               <>
+                {/* To update a course, users have to provide title and description */}
+
                 <h2>Update Course</h2>
                 {errors.length > 0 && (
                   <div className="validation--errors">

@@ -12,6 +12,9 @@ import NotFound from "./components/NotFound";
 import withContext from "./Context";
 import PrivateRoute from "./PrivateRoute";
 
+// Used context to get authenticated User for all components.
+// Can be refactored to use {useContext} within each component
+
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInUpWithContext = withContext(UserSignIn);
@@ -25,12 +28,16 @@ const PrivateRouteWithContext = withContext(PrivateRoute);
 function App() {
   return (
     <div>
+      {/* ***** Routes for every component **** */}
       <main>
         <HeaderWithContext />
         <Routes>
           <Route exact path="/" element={<CoursesWithContext />} />
           <Route path={`courses/:id`} element={<CourseDetailWithContext />} />
           <Route path="/courses/create" element={<CreateCourseWithContext />} />
+
+          {/* ***** Private Routes ONLY FOR authenticated User **** */}
+          {/* ***** Check PrivateRoute component **** */}
 
           <Route
             path="/courses/:id/update"

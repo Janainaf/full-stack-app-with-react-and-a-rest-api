@@ -1,5 +1,6 @@
 import React from "react";
 
+// Component for pages that should not be access by non-authorises users
 function Forbidden() {
   return (
     <div id="root">

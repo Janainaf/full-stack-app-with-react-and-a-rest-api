@@ -1,4 +1,6 @@
 export default class Data {
+  // * Fetches the REST API using users credentials when necessary
+
   api(path, method, body = null, requiresAuth = false, credentials = null) {
     const url = "http://localhost:5000/api" + path;
 
@@ -22,6 +24,7 @@ export default class Data {
     return fetch(url, options);
   }
 
+  // * Gets a user by their @param username(here, emailAddress) and @param password
   async getUser(username, password) {
     const response = await this.api(`/users`, "GET", null, true, {
       username,
@@ -36,6 +39,7 @@ export default class Data {
     }
   }
 
+  // Creates a new user with an object user and its properties (see signup.js)
   async createUser(user) {
     const response = await this.api("/users", "POST", user);
     if (response.status === 201) {
@@ -49,6 +53,8 @@ export default class Data {
     }
   }
 
+  // Gets all courses on the database
+
   async getCourses() {
     const response = await this.api("/courses", "GET", null, false);
     if (response.status === 200) {
@@ -58,6 +64,8 @@ export default class Data {
     }
   }
 
+  // Gets selected courses by @param id
+
   async getCourse(id) {
     const response = await this.api(`/courses/${id}`, "GET", null, false);
     if (response.status === 200) {
@@ -66,6 +74,8 @@ export default class Data {
       throw new Error();
     }
   }
+
+  // Creates a new course with an object course, and authenticated user credentials
 
   async createCourse(course, username, password) {
     const response = await this.api("/courses", "POST", course, true, {
@@ -83,6 +93,8 @@ export default class Data {
     }
   }
 
+  // Updates the selected course by id, using as @params the course id, the course object and users credentials
+
   async updateCourse(id, course, username, password) {
     const response = await this.api(`/courses/${id}`, "PUT", course, true, {
       username,
@@ -99,6 +111,7 @@ export default class Data {
     }
   }
 
+  // * Deletes selected course by id
   async deleteCourse(id, username, password) {
     const response = await this.api(`/courses/${id}`, "DELETE", null, true, {
       username,

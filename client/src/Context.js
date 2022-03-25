@@ -28,6 +28,7 @@ export class Provider extends Component {
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
   }
+  // Signs the user in with its credentials (@param email and @param password) and sets it to authenticatedUser state with cookies
 
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
@@ -38,7 +39,7 @@ export class Provider extends Component {
         };
       });
       const cookieOptions = {
-        expires: 1, // 1 day
+        expires: 1,
       };
       Cookies.set(
         "authenticatedUser",
@@ -49,6 +50,7 @@ export class Provider extends Component {
     return user;
   };
 
+  // * Signs user out, sets authenticated user to null and removes cookies
   signOut = () => {
     this.setState({ authenticatedUser: null });
     Cookies.remove("authenticatedUser");

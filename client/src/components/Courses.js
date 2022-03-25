@@ -5,24 +5,23 @@ function Courses(props) {
   const { context } = props;
   const [data, setData] = useState("");
 
+  // Fetches all courses using context and data helper
+  // for more information, please check Context.js and Data.js
   useEffect(() => {
-    let isMounted = true;
-
     context.data
       .getCourses()
       .then((response) => {
-        if (isMounted) setData(response);
+        setData(response);
       })
       .catch((err) => {
         console.log(err);
       });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  }, [context.data]);
 
   return (
     <div className="wrap main--grid">
+      {/* Maps all courses fetched and displays them on individual cards - 
+      each course is linked to a course detail component by its id */}
       {data &&
         data.map((course) => (
           <Link

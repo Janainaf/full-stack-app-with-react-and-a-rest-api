@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import Forbidden from "./Forbidden";
 import ReactMarkdown from "react-markdown";
 
 function CourseDetail(props) {
@@ -12,21 +11,20 @@ function CourseDetail(props) {
   let navigate = useNavigate();
   const authUser = context.authenticatedUser;
 
+  // Fetches the selected course by id  using context and data helper
+  // for more information, please check Context.js and Data.js
   useEffect(() => {
-    let isMounted = true;
-
     context.data
       .getCourse(id)
       .then((response) => {
-        if (isMounted) setselectedCourse(response);
+        setselectedCourse(response);
       })
       .catch((err) => {
         console.log(err);
       });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  }, [context.data, id]);
+
+  // Deletes the selected course by id
 
   const handleRemoveCourse = (event) => {
     event.preventDefault();
@@ -46,6 +44,9 @@ function CourseDetail(props) {
 
   return (
     <main>
+      {/* *** Course Detail header (can be refactored into a new component)
+      - shows delete, update and return button depending on auth user *** */}
+
       <div className="actions--bar">
         {selectedCourse && (
           <div className="wrap">
@@ -56,6 +57,7 @@ function CourseDetail(props) {
               </Link>
             ) : (
               <>
+                {/* ***Only the user who created the course can update or delete it*** */}
                 <Link
                   to={`/courses/${selectedCourse.course.id}/update`}
                   className="button"
@@ -73,6 +75,8 @@ function CourseDetail(props) {
           </div>
         )}
       </div>
+      {/* *** This part can be later refactored into a component *** */}
+
       <div className="wrap">
         <h2>Course Detail</h2>
         <form>
@@ -88,12 +92,16 @@ function CourseDetail(props) {
                     By {selectedCourse.course.User.firstName}{" "}
                     {selectedCourse.course.User.lastName}
                   </p>
+                  {/* ***Added Markdown for better readability *** */}
+
                   <ReactMarkdown>
                     {selectedCourse.course.description}
                   </ReactMarkdown>
                 </>
               )}
             </div>
+            {/* *** This part can be later refactored into a component *** */}
+
             {selectedCourse && (
               <div>
                 <h3 className="course--detail--title">Estimated Time</h3>

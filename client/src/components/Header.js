@@ -12,6 +12,7 @@ function Header(props) {
           <Link to="/">Courses</Link>
         </h1>
         <nav>
+          {/* **** Header is customised to authenticated user  ****/}
           {authUser && (
             <ul className="header--signedin">
               <li>Welcome, {authUser.user.firstName}!</li>

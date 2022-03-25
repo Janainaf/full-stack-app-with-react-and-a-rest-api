@@ -10,6 +10,9 @@ function UserSignIn(props) {
   const { context } = props;
   let navigate = useNavigate();
 
+  // Sign in a user using context and data helper
+  // for more information, please check Context.js and Data.js
+
   function handleSubmit(event) {
     event.preventDefault();
     try {
